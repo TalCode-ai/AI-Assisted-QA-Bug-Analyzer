@@ -6,6 +6,8 @@ from pages.login_page import LoginPage
 from pages.inventory_page import InventoryPage
 from pages.cart_page import CartPage
 
+from utils.screenshot_helper import save_screenshot
+
 
 def test_add_backpack_to_cart_and_verify_in_cart():
     driver = webdriver.Chrome(
@@ -26,5 +28,7 @@ def test_add_backpack_to_cart_and_verify_in_cart():
     cart_page = CartPage(driver)
     assert cart_page.is_loaded()
     assert cart_page.has_backpack()
+
+    save_screenshot(driver, "test_add_backpack_to_cart_and_verify_in_cart")
 
     driver.quit()

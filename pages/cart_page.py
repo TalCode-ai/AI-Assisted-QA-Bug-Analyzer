@@ -20,7 +20,8 @@ class CartPage:
         return self.get_product_name() == "Sauce Labs Backpack"
 
     def click_checkout(self):
-        self.driver.find_element(*self.CHECKOUT_BUTTON).click()
+        checkout_button = self.driver.find_element(*self.CHECKOUT_BUTTON)
+        self.driver.execute_script("arguments[0].click();", checkout_button)
 
     def click_continue_shopping(self):
         self.driver.find_element(*self.CONTINUE_SHOPPING_BUTTON).click()
