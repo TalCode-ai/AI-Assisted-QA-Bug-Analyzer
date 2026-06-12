@@ -2,6 +2,8 @@ from pages.inventory_page import InventoryPage
 from pages.cart_page import CartPage
 from pages.checkout_page import CheckoutPage
 from pages.checkout_overview_page import CheckoutOverviewPage
+import pytest
+from utils.bug_report_generator import generate_bug_report
 
 
 def test_checkout_information_form_success(logged_in_driver):
@@ -36,8 +38,22 @@ def test_checkout_information_form_success(logged_in_driver):
 
     assert "checkout-complete" in driver.current_url
 
-
-def test_checkout_with_empty_fields_shows_error(logged_in_driver):
+@pytest.mark.parametrize(
+    "first_name, last_name, postal_code, expected_error",
+    [
+        ("", "", "", "First Name is required"),
+        ("", "User", "12345", "First Name is required"),
+        ("Test", "", "12345", "Last Name is required"),
+        ("Test", "User", "", "Postal Code is required"),
+    ]
+)
+def test_checkout_validation_errors(
+        logged_in_driver,
+        first_name,
+        last_name,
+        postal_code,
+        expected_error
+):
     driver = logged_in_driver
 
     inventory_page = InventoryPage(driver)
@@ -52,6 +68,20 @@ def test_checkout_with_empty_fields_shows_error(logged_in_driver):
     cart_page.click_checkout()
 
     checkout_page = CheckoutPage(driver)
+    checkout_page.fill_checkout_information(
+        first_name,
+        last_name,
+        postal_code
+    )
     checkout_page.click_continue()
 
-    assert "First Name is required" in checkout_page.get_error_message()
+    assert expected_error in checkout_page.get_error_message()
+
+def test_generate_bug_report():
+    report_path = generate_bug_report(
+        test_name="sample_failed_test",
+        error_message="Element not found",
+        screenshot_path="reports/screenshots/sample.png"
+    )
+
+    assert report_path is not None
