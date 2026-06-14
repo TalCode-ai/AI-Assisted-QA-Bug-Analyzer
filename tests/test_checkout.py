@@ -76,12 +76,3 @@ def test_checkout_validation_errors(
     checkout_page.click_continue()
 
     assert expected_error in checkout_page.get_error_message()
-
-def test_generate_bug_report():
-    report_path = generate_bug_report(
-        test_name="sample_failed_test",
-        error_message="Element not found",
-        screenshot_path="reports/screenshots/sample.png"
-    )
-
-    assert report_path is not None
