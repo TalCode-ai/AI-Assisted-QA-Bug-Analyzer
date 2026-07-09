@@ -1,6 +1,6 @@
 # AI Assisted QA Bug Analyzer
 
-A Python-based QA Automation framework built with **Selenium** and **Pytest**, following the **Page Object Model (POM)** design pattern.
+This project demonstrates a QA automation framework developed with Python, Selenium WebDriver and Pytest to practice modern UI automation techniques and structured bug analysis.
 
 The project demonstrates modern QA Automation practices, including:
 
@@ -99,7 +99,7 @@ uv run pytest -v tests/test_checkout.py
 
 ## Automatic Failure Workflow
 
-When a test fails, the framework automatically:
+The framework automatically performs the following actions when a test fails:
 
 1. Detects the failure using a Pytest hook.
 2. Captures a browser screenshot.
@@ -112,6 +112,8 @@ The generated artifacts are stored under the `reports/` directory during runtime
 ---
 
 ## Bug Analysis Module
+
+The project currently includes a rule-based bug analysis component designed as a foundation for future AI integration.
 
 The project includes an extensible bug analysis component (`ai_bug_analyzer.py`).
 
